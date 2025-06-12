@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>의료 AI 활용과 전망: 인포그래픽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: This SPA is designed as a single, scrollable narrative infographic. The structure follows a logical story arc: 1. Hero section with a powerful headline and key impact statistics to grab attention. 2. A "How it Works" section to demystify core AI concepts (Transformer, XAI) using simple diagrams. 3. The main "AI in Action" section, using a grid of cards to showcase real-world clinical applications with donut charts for quick data digestion. 4. A "Future Outlook" section that visually explains advanced concepts like MAS workflows. 5. A "Challenges" section using a bar chart to compare obstacles. This linear, top-to-bottom flow is ideal for an infographic, guiding the user through a curated story for maximum comprehension and impact. -->
+    <!-- Visualization & Content Choices: 1. Report Info: LLM Principles -> Goal: Organize/Inform -> Viz: HTML/CSS Flowchart -> Justification: Visually breaks down the complex Transformer architecture into digestible steps without needing SVG. 2. Report Info: Paige Prostate/Viz.ai success metrics -> Goal: Compare/Inform -> Viz: Chart.js Donut Chart -> Justification: Donut charts are excellent for showing a single, key percentage (e.g., accuracy, time saved) in a visually engaging way. 3. Report Info: Multi-Agent System Workflow -> Goal: Organize -> Viz: HTML/CSS Diagram -> Justification: Clearly illustrates the collaborative process between different AI agents, which is key to understanding the concept. 4. Report Info: AI Implementation Challenges -> Goal: Compare/Rank -> Viz: Chart.js Bar Chart -> Justification: A bar chart effectively ranks different challenges, allowing users to quickly see which are most significant. All choices adhere to NO SVG/Mermaid constraints. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F0F9FF; /* light-blue-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .sticky-nav a.active {
+            background-color: #0284C7; /* sky-600 */
+            color: white;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav sticky top-0 z-50 bg-white/70 backdrop-blur-lg shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-16 space-x-2 md:space-x-4">
+                <a href="#intro" class="px-3 py-2 text-xs md:text-sm font-medium rounded-lg transition-colors duration-300">소개</a>
+                <a href="#how-it-works" class="px-3 py-2 text-xs md:text-sm font-medium rounded-lg transition-colors duration-300">핵심 원리</a>
+                <a href="#in-action" class="px-3 py-2 text-xs md:text-sm font-medium rounded-lg transition-colors duration-300">적용 사례</a>
+                <a href="#future" class="px-3 py-2 text-xs md:text-sm font-medium rounded-lg transition-colors duration-300">미래 전망</a>
+                <a href="#challenges" class="px-3 py-2 text-xs md:text-sm font-medium rounded-lg transition-colors duration-300">과제</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- I. Introduction Section -->
+        <section id="intro" class="text-center py-16 md:py-24">
+            <h1 class="text-4xl md:text-6xl font-black text-sky-800 leading-tight">의료 AI: 혁신의 최전선</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">데이터가 생명을 구하는 시대, 인공지능이 진단부터 치료까지 의료의 모든 패러다임을 바꾸고 있습니다.</p>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-sky-100 p-6 rounded-2xl">
+                    <div class="text-5xl font-extrabold text-sky-600">44%</div>
+                    <p class="mt-2 font-semibold">뇌졸중 진단 시간 단축</p>
+                    <p class="text-sm text-slate-500">(Viz.ai 사례)</p>
+                </div>
+                <div class="bg-sky-100 p-6 rounded-2xl">
+                    <div class="text-5xl font-extrabold text-sky-600">98%</div>
+                    <p class="mt-2 font-semibold">전립선암 진단 특이도</p>
+                    <p class="text-sm text-slate-500">(Paige Prostate 사례)</p>
+                </div>
+                <div class="bg-sky-100 p-6 rounded-2xl">
+                    <div class="text-5xl font-extrabold text-sky-600">>70%</div>
+                    <p class="mt-2 font-semibold">의사 행정업무 시간 감소</p>
+                     <p class="text-sm text-slate-500">(ACI 기술)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- II. How It Works Section -->
+        <section id="how-it-works" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-sky-800">핵심 원리: AI는 어떻게 의료 데이터를 이해하는가?</h2>
+                <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">복잡한 의료 AI의 핵심에는 '트랜스포머' 아키텍처와 '설명가능성'이 있습니다.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="card">
+                    <h3 class="text-2xl font-bold mb-4 text-sky-700">LLM의 엔진: 트랜스포머 구조</h3>
+                    <p class="mb-6 text-slate-600">LLM이 방대한 의료 문서의 맥락을 이해하는 비결입니다. 여러 단어에 동시에 '주목(Attention)'하여 중요 정보를 병렬로 처리합니다.</p>
+                    <div class="space-y-4 text-center text-sm font-medium">
+                        <div class="p-3 bg-sky-50 rounded-lg shadow-sm">입력 (환자 기록, 논문)</div>
+                        <div class="text-3xl text-sky-400">↓</div>
+                        <div class="p-4 bg-sky-100 border-2 border-sky-300 border-dashed rounded-lg shadow-sm">
+                            <span class="font-bold text-sky-800">멀티-헤드 어텐션</span><br>
+                            <span class="text-xs text-slate-500">다양한 관점에서 문맥적 관계 파악</span>
+                        </div>
+                        <div class="text-3xl text-sky-400">↓</div>
+                        <div class="p-3 bg-sky-50 rounded-lg shadow-sm">피드 포워드 네트워크</div>
+                        <div class="text-3xl text-sky-400">↓</div>
+                        <div class="p-3 bg-sky-50 rounded-lg shadow-sm">출력 (진단 요약, 정보 추출)</div>
+                    </div>
+                </div>
+                <div class="card">
+                     <h3 class="text-2xl font-bold mb-4 text-sky-700">신뢰의 기반: 설명가능 AI (XAI)</h3>
+                    <p class="mb-6 text-slate-600">AI의 '블랙박스'를 열어, 왜 그런 결정을 내렸는지 시각적으로 보여줌으로써 임상의의 신뢰를 확보합니다.</p>
+                     <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-800">Grad-CAM</h4>
+                            <p class="mt-1 text-sm text-slate-600">의료 영상에서 AI가 진단의 근거로 삼은 영역을 <span class="font-bold text-red-500">히트맵</span>으로 표시합니다.</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-800">SHAP / LIME</h4>
+                            <p class="mt-1 text-sm text-slate-600">특정 예측에 각 데이터(나이, 혈압 등)가 미친 <span class="font-bold text-blue-600">영향력</span>을 수치로 보여줍니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- III. AI in Action Section -->
+        <section id="in-action" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-sky-800">AI 적용 사례: 임상 현장의 혁신</h2>
+                <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">AI는 이미 진단, 치료, 신약 개발, 환자 관리 전반에서 실질적인 성과를 내고 있습니다.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1: Imaging -->
+                <div class="card col-span-1 md:col-span-2 lg:col-span-3">
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                             <h3 class="text-2xl font-bold text-sky-700">진단: 의료 영상 분석</h3>
+                             <p class="mt-2 text-slate-600">AI가 CT, MRI, 병리 슬라이드를 분석하여 암, 뇌졸중 등의 이상 징후를 조기에 발견합니다. 이는 진단 정확도를 높이고 판독 시간을 단축시켜 의료진의 부담을 덜어줍니다.</p>
+                            <p class="mt-4 text-sm"><b>주요 사례:</b> Paige Prostate (전립선암), Viz.ai (뇌졸중)</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="diagnosisChart"></canvas>
+                        </div>
+                     </div>
+                </div>
+                <!-- Card 2: Treatment -->
+                <div class="card">
+                     <h3 class="text-2xl font-bold text-sky-700">치료: 정밀 방사선 & 로봇 수술</h3>
+                     <p class="mt-2 text-slate-600">AI는 환자 맞춤형 방사선 치료 계획을 수립하고, 로봇 수술의 정밀도를 높여 치료 효과를 극대화하고 부작용과 회복 기간을 최소화합니다.</p>
+                     <div class="mt-4 chart-container h-64">
+                         <canvas id="treatmentChart"></canvas>
+                     </div>
+                </div>
+                 <!-- Card 3: Drug Dev -->
+                <div class="card">
+                     <h3 class="text-2xl font-bold text-sky-700">신약 개발: 기간 단축 & 비용 절감</h3>
+                     <p class="mt-2 text-slate-600">생성형 AI가 새로운 약물 후보 물질을 발굴하고, 임상시험에 적합한 환자를 빠르게 찾아내 신약 개발의 성공률을 높이고 있습니다.</p>
+                    <div class="mt-4 chart-container h-64">
+                         <canvas id="drugChart"></canvas>
+                     </div>
+                </div>
+                <!-- Card 4: Patient Care -->
+                <div class="card">
+                     <h3 class="text-2xl font-bold text-sky-700">환자 관리: 업무 자동화</h3>
+                     <p class="mt-2 text-slate-600">AI 챗봇은 24시간 상담을 제공하고, ACI 기술은 진료 내용을 자동으로 기록하여 의료진이 환자에게 더 집중할 수 있도록 돕습니다.</p>
+                    <div class="mt-4 chart-container h-64">
+                         <canvas id="careChart"></canvas>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IV. Future Outlook Section -->
+        <section id="future" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-sky-800">미래 전망: 협력과 자율의 시대로</h2>
+                <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">여러 AI가 협진하는 '다중 에이전트 시스템(MAS)'과 실제 같은 '합성 데이터'가 의료의 미래를 이끌 것입니다.</p>
+            </div>
+             <div class="card">
+                <h3 class="text-2xl font-bold text-sky-700 text-center mb-8">다중 에이전트 시스템 (MAS) 워크플로우</h3>
+                <p class="text-center text-slate-600 max-w-3xl mx-auto mb-10">마치 다학제 컨퍼런스처럼, 각 분야 전문 AI(도구 에이전트)들이 협력하여 복잡한 진단 문제를 해결하고 최적의 결론을 도출합니다.</p>
+                <div class="flex flex-col md:flex-row items-stretch justify-between space-y-4 md:space-y-0 md:space-x-4 text-center font-semibold">
+                    <div class="flex-1 p-4 bg-slate-50 rounded-lg flex flex-col justify-center">환자 사례 입력<br><span class="text-xs font-normal">(영상, EHR, 유전체)</span></div>
+                    <div class="self-center text-3xl text-sky-400 mx-4 shrink-0">&rarr;</div>
+                    <div class="flex-1 p-4 bg-sky-100 rounded-lg flex flex-col justify-center">계획 에이전트<br><span class="text-xs font-normal">(진단 계획 수립)</span></div>
+                    <div class="self-center text-3xl text-sky-400 mx-4 shrink-0">&rarr;</div>
+                    <div class="flex-1 flex flex-col space-y-2 justify-center">
+                        <div class="p-3 bg-white border border-slate-200 rounded-lg">도구 에이전트 1 (영상 분석)</div>
+                        <div class="p-3 bg-white border border-slate-200 rounded-lg">도구 에이전트 2 (EHR 분석)</div>
+                        <div class="p-3 bg-white border border-slate-200 rounded-lg">도구 에이전트 3 (문헌 검색)</div>
+                    </div>
+                     <div class="self-center text-3xl text-sky-400 mx-4 shrink-0">&rarr;</div>
+                    <div class="flex-1 p-4 bg-sky-600 text-white rounded-lg flex flex-col justify-center">최종 진단 및 근거 제시<br><span class="text-xs font-normal">(종합 결론)</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- V. Challenges Section -->
+        <section id="challenges" class="py-16 md:py-24">
+            <div class="text-center mb-16">
+                 <h2 class="text-3xl md:text-4xl font-extrabold text-sky-800">주요 과제와 나아갈 길</h2>
+                 <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">AI의 성공적인 도입을 위해 우리는 데이터, 윤리, 신뢰의 문제를 함께 해결해야 합니다.</p>
+            </div>
+            <div class="card">
+                 <h3 class="text-2xl font-bold text-sky-700 text-center mb-8">의료 AI 도입의 주요 장애물</h3>
+                <div class="chart-container" style="height: 400px; max-height: 500px;">
+                    <canvas id="challengesChart"></canvas>
+                </div>
+                <p class="mt-8 text-center text-slate-600">데이터 품질 및 보안, 알고리즘의 편향성, 그리고 임상의의 신뢰 확보가 AI 도입의 가장 큰 과제로 꼽힙니다. 이를 해결하기 위해 표준화된 데이터 거버넌스, 지속적인 편향 모니터링, 그리고 XAI를 통한 투명성 확보가 필수적입니다.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-sky-900 text-white mt-16">
+        <div class="container mx-auto px-8 py-12 text-center">
+            <h3 class="text-2xl font-bold">부민병원의 미래: AI와의 동행</h3>
+            <p class="mt-4 max-w-3xl mx-auto text-sky-200">AI는 의료진을 대체하는 것이 아니라, 더 나은 진료를 위한 가장 강력한 파트너입니다. 부민병원은 데이터 기반의 환자 중심 의료를 선도하겠습니다.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const chartTooltipConfig = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    },
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed !== null) {
+                           if(context.chart.config.type === 'doughnut') {
+                               label += context.raw + '%';
+                           } else {
+                               label += context.formattedValue;
+                           }
+                        }
+                        return label;
+                    }
+                }
+            }
+        }
+    };
+    
+    function processLabel(label) {
+        if (typeof label !== 'string' || label.length <= 16) return label;
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + ' ' + word).trim().length > 16) {
+                lines.push(currentLine.trim());
+                currentLine = word;
+            } else {
+                currentLine = (currentLine + ' ' + word).trim();
+            }
+        });
+        lines.push(currentLine.trim());
+        return lines;
+    }
+
+    // Diagnosis Chart
+    new Chart(document.getElementById('diagnosisChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['정확도 향상 기여도', '효율성 기여도'],
+            datasets: [{
+                label: '진단 분야 AI 영향',
+                data: [97, 85],
+                backgroundColor: ['#0284C7', '#38BDF8'],
+                borderColor: '#F0F9FF',
+                borderWidth: 4,
+            }]
+        },
+        options: { ...chartTooltipConfig, responsive: true, maintainAspectRatio: false }
+    });
+
+    // Treatment Chart
+    new Chart(document.getElementById('treatmentChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['치료 계획 시간 단축', '수술 정밀도 향상'],
+            datasets: [{
+                label: '치료 분야 AI 영향',
+                data: [90, 95],
+                backgroundColor: ['#0369A1', '#0EA5E9'],
+                borderColor: '#F0F9FF',
+                borderWidth: 4,
+            }]
+        },
+        options: { ...chartTooltipConfig, responsive: true, maintainAspectRatio: false }
+    });
+
+    // Drug Development Chart
+    new Chart(document.getElementById('drugChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['후보물질 탐색 시간 단축', '성공 가능성 예측'],
+            datasets: [{
+                label: '신약개발 분야 AI 영향',
+                data: [80, 70],
+                backgroundColor: ['#075985', '#38BDF8'],
+                borderColor: '#F0F9FF',
+                borderWidth: 4,
+            }]
+        },
+        options: { ...chartTooltipConfig, responsive: true, maintainAspectRatio: false }
+    });
+
+    // Patient Care Chart
+    new Chart(document.getElementById('careChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['의사 행정업무 감소', '환자 접근성 향상'],
+            datasets: [{
+                label: '환자관리 분야 AI 영향',
+                data: [76, 80],
+                backgroundColor: ['#0C4A6E', '#7DD3FC'],
+                borderColor: '#F0F9FF',
+                borderWidth: 4,
+            }]
+        },
+        options: { ...chartTooltipConfig, responsive: true, maintainAspectRatio: false }
+    });
+
+    // Challenges Chart
+    const challengesLabels = ['데이터 품질, 보안 및 프라이버시', '알고리즘 편향 및 공정성 문제', '임상의 신뢰 및 워크플로우 통합', '시스템 상호운용성 부족', '법적 책임 및 규제 프레임워크', '높은 도입 비용 및 ROI 문제'];
+    new Chart(document.getElementById('challengesChart'), {
+        type: 'bar',
+        data: {
+            labels: challengesLabels.map(processLabel),
+            datasets: [{
+                label: '장애물 심각도(가중치)',
+                data: [95, 92, 88, 85, 80, 75],
+                backgroundColor: ['#0C4A6E', '#075985', '#0369A1', '#0284C7', '#0EA5E9', '#38BDF8'],
+                borderColor: '#0C4A6E',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            ...chartTooltipConfig,
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { ...chartTooltipConfig.plugins, legend: { display: false } },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(100, 116, 139, 0.1)'
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // Sticky Nav active state on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.sticky-nav a');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                });
+            }
+        });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+
+});
+</script>
+
+</body>
+</html>
